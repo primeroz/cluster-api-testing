@@ -3,6 +3,7 @@
 KUBE_CONTEXT ?= kind-cluster-api
 CLUSTER_NAME ?= cluster-api
 AZURE_RG_NAME ?= testClusterAPI
+AZURE_LOCATION ?= "westeurope"
 
 # Azure Keyvault name where secrets are stored (ie: cloudflare password)
 #AZURE_KEY_VAULT_NAME ?= my-infra
@@ -10,7 +11,8 @@ AZURE_RG_NAME ?= testClusterAPI
 # Applications to deploy, order is important
 APPS = \
 	azure-resource-group \
-  clusterctl
+  clusterctl \
+  azure-ephemeral-cluster
 
 # Ref: https://github.com/helm/charts/tree/master/stable/nginx-ingress
 NGINX_INGRESS_CHART_VERSION = 4.3.0

@@ -1,10 +1,16 @@
 include ../env.$(ENVIRONMENT).mk
 include ../common.mk
 
-.PHONY: deploy
-deploy: check
+.PHONY: init
+init:
 	@clusterctl init --infrastructure azure
+
+.PHONY: upgrade
+upgrade:
 	@clusterctl upgrade plan
+
+.PHONY: deploy
+deploy: init upgrade
 
 .PHONY: delete
 delete:

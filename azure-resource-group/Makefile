@@ -14,7 +14,7 @@ check:
 .PHONY: deploy
 deploy: check
 	@echo "Create Azure Group"
-	@az group create --location westeurope -n ${AZURE_RG_NAME}  --managed-by ${AZURE_SUBSCRIPTION} --tags "env=testing scope=cluster-api"
+	@az group create --location ${AZURE_LOCATION} -n ${AZURE_RG_NAME}  --managed-by ${AZURE_SUBSCRIPTION} --tags "env=testing scope=cluster-api"
 
 .PHONY: delete
 delete: check
