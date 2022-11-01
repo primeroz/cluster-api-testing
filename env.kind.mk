@@ -12,7 +12,7 @@ AZURE_LOCATION ?= "westeurope"
 APPS = \
 	azure-resource-group \
   clusterctl \
-  azure-ephemeral-cluster
+  azure-cluster
 
 # Ref: https://github.com/helm/charts/tree/master/stable/nginx-ingress
 NGINX_INGRESS_CHART_VERSION = 4.3.0
