@@ -2,6 +2,7 @@
   _config+:: {
     nodes+: {
       instance: error 'instance for this nodepool must be specified',
+      failureDomain: null,
     },
   },
 
@@ -33,6 +34,7 @@
           name: '%s-md-%s' % [$._config.cluster_name, $._config.nodes.instance],
         },
         version: $._config.cluster.version,
+        [if $._config.nodes.failureDomain != null then 'failureDomain']: $._config.nodes.failureDomain,
       },
     },
   },

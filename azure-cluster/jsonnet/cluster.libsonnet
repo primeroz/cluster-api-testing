@@ -17,6 +17,7 @@ config {
     resource_group:: 'testClusterAPI',
 
     cluster+: {
+      bastion:: false,
       version: error 'cluster version is required',
     },
   },
@@ -43,27 +44,78 @@ config {
     _config+:: $._config,
   },
 
-  // NodePool 0
-  azureMachineTemplateNodes0: azure_machine_template_nodes {
+  // NodePools
+  azureMachineTemplateNodes1: azure_machine_template_nodes {
     _config+:: $._config {
       nodes+: {
-        instance: '0',
+        instance: '1',
       },
     },
   },
 
-  kubeadmNodes0: kubeadm_config_template_nodes {
+  azureMachineTemplateNodes2: azure_machine_template_nodes {
     _config+:: $._config {
       nodes+: {
-        instance: '0',
+        instance: '2',
       },
     },
   },
 
-  machineDeployment0: machine_deployment {
+  azureMachineTemplateNodes3: azure_machine_template_nodes {
     _config+:: $._config {
       nodes+: {
-        instance: '0',
+        instance: '3',
+      },
+    },
+  },
+
+  kubeadmNodes1: kubeadm_config_template_nodes {
+    _config+:: $._config {
+      nodes+: {
+        instance: '1',
+      },
+    },
+  },
+
+  kubeadmNodes2: kubeadm_config_template_nodes {
+    _config+:: $._config {
+      nodes+: {
+        instance: '2',
+      },
+    },
+  },
+
+  kubeadmNodes3: kubeadm_config_template_nodes {
+    _config+:: $._config {
+      nodes+: {
+        instance: '3',
+      },
+    },
+  },
+
+  machineDeployment1: machine_deployment {
+    _config+:: $._config {
+      nodes+: {
+        instance: '1',
+        failureDomain: '1',
+      },
+    },
+  },
+
+  machineDeployment2: machine_deployment {
+    _config+:: $._config {
+      nodes+: {
+        instance: '2',
+        failureDomain: '2',
+      },
+    },
+  },
+
+  machineDeployment3: machine_deployment {
+    _config+:: $._config {
+      nodes+: {
+        instance: '3',
+        failureDomain: '3',
       },
     },
   },

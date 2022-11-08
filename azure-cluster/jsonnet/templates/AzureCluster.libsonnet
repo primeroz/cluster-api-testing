@@ -8,7 +8,7 @@
     namespace: $._config.namespace,
   },
   spec: {
-    bastionSpec: {
+    [if $._config.cluster.bastion then 'bastionSpec']: {
       azureBastion: {},
     },
     identityRef: {
