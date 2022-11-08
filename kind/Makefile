@@ -1,5 +1,6 @@
-include ../env.$(ENVIRONMENT).mk
 include ../common.mk
+include ../env.kind.mk
+include ../env.$(ENVIRONMENT).mk
 
 export KIND_CONFIG_FILE_NAME=kind.config.yaml
 
@@ -52,4 +53,4 @@ delete:
 
 .PHONY: display
 display:
-	kubectl ${KCTX} cluster-info --context kind-${CLUSTER_NAME}
+	kubectl cluster-info --context ${KUBE_CONTEXT}
