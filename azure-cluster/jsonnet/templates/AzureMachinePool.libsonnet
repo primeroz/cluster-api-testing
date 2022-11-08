@@ -22,18 +22,16 @@
       },
     },
     template: {
-      spec: {
-        osDisk: {
-          cachingType: 'ReadOnly',
-          diffDiskSettings: {
-            option: 'Local',
-          },
-          diskSizeGB: $._config.nodes.os.diskSizeGB,
-          osType: 'Linux',
+      osDisk: {
+        cachingType: 'ReadOnly',
+        diffDiskSettings: {
+          option: 'Local',
         },
-        sshPublicKey: $._config.controlplane.sshPublicKey,
-        vmSize: $._config.nodes.vmSize,
+        diskSizeGB: $._config.nodes.os.diskSizeGB,
+        osType: 'Linux',
       },
+      sshPublicKey: $._config.controlplane.sshPublicKey,
+      vmSize: $._config.nodes.vmSize,
     },
   },
 }
