@@ -8,6 +8,9 @@
     namespace: $._config.namespace,
   },
   spec: {
+    bastionSpec: {
+      azureBastion: {},
+    },
     identityRef: {
       apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
       kind: 'AzureClusterIdentity',

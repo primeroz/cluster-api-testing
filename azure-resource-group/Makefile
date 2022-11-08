@@ -6,7 +6,7 @@ ACCOUNT := $(shell az account show --query 'name')
 .PHONY: check
 check:
 	$(info Checking if Azure account is correct)
-	@if [[ $(ACCOUNT) != "Azure FC 1" ]]; then\
+	@if [[ $(ACCOUNT) != $(AZURE_CHECK_ACCOUNT) ]]; then\
 		echo "Wrong Account";\
 		false;\
 	fi

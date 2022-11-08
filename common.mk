@@ -3,6 +3,8 @@ SHELL := bash -eo pipefail
 
 ENVIRONMENT ?= test-cluster-ephemeral
 
+AZURE_CHECK_ACCOUNT ?= "Azure FC 1"
+
 ifndef ENVIRONMENT
 $(error the variable ENVIRONMENT is not defined, run using `ENVIRONMENT=kind make deploy-all')
 endif

@@ -6,9 +6,9 @@
     location:: 'westeurope',
     azure_client_id:: std.extVar('AZURE_CLIENT_ID'),
     azure_tenant_id:: std.extVar('AZURE_TENANT_ID'),
-    cluster_identity_name:: 'cluster-identity',  // TODO Make unique per cluster ?
+    cluster_identity_name:: 'cluster-identity-%s' % $._config.cluster_name,
     cluster_identity_namespace:: $._config.namespace,
-    cluster_identity_secret_name:: 'cluster-identity-secret',
+    cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
     cluster_identity_secret_namespace:: $._config.namespace,
     resource_group:: std.extVar('AZURE_RESOURCE_GROUP'),
     subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),

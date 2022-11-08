@@ -12,10 +12,12 @@ prep:
 
 .PHONY: generate
 generate: prep
-	@kubecfg show jsonnet/test1.jsonnet \
+	@export AZURE_CLUSTER_IDENTITY_SECRET_NAME=$(AZURE_CLUSTER_IDENTITY_SECRET_NAME)
+	@kubecfg update jsonnet/test1.jsonnet \
     --ext-str="AZURE_SUBSCRIPTION" \
     --ext-str="AZURE_TENANT_ID" \
-    --ext-str="AZURE_CLIENT_ID"
+    --ext-str="AZURE_CLIENT_ID" \
+    --ext-str="AZURE_CLUSTER_IDENTITY_SECRET_NAME"
 
 .PHONY: deploy
 deploy: generate
