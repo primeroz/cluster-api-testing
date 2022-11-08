@@ -17,7 +17,7 @@ config {
     resource_group:: 'testClusterAPI',
 
     cluster+: {
-      version: 'v1.23.12',
+      version: error 'cluster version is required',
     },
   },
 

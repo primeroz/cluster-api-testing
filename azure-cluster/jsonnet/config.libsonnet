@@ -14,7 +14,7 @@
     subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),
 
     cluster+: {
-      version: 'v1.23.12',
+      version: error 'cluster version must be specified',
       podCidrBlocks: ['192.168.0.0/16'],
       labels+: {
         cni: 'calico',

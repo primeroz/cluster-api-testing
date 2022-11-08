@@ -4,6 +4,8 @@ include ../common.mk
 
 current_dir = $(shell pwd)
 
+KUBECFG_COMMAND ?= show
+
 .PHONY: prep
 prep:
 	@kubectl get ns ${CLUSTER_NAMESPACE} >/dev/null 2>&1 || kubectl create namespace ${CLUSTER_NAMESPACE} >/dev/null
@@ -13,7 +15,7 @@ prep:
 .PHONY: generate
 generate: prep
 	@export AZURE_CLUSTER_IDENTITY_SECRET_NAME=$(AZURE_CLUSTER_IDENTITY_SECRET_NAME)
-	@kubecfg update jsonnet/test1.jsonnet \
+	@kubecfg ${KUBECFG_COMMAND} jsonnet/test1.jsonnet \
     --ext-str="AZURE_SUBSCRIPTION" \
     --ext-str="AZURE_TENANT_ID" \
     --ext-str="AZURE_CLIENT_ID" \
