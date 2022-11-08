@@ -6,12 +6,21 @@
   },
 
   apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
-  kind: 'AzureMachineTemplate',
+  kind: 'AzureMachinePool',
   metadata: {
-    name: '%s-md-%s' % [$._config.cluster_name, $._config.nodes.instance],
+    name: '%s-mp-%s' % [$._config.cluster_name, $._config.nodes.instance],
     namespace: $._config.namespace,
   },
   spec: {
+    location: $._config.nodes.location,
+    strategy: {
+      type: 'RollingUpdate',
+      rollingUpdate: {
+        maxSurge: '25%',
+        maxUnavailable: 1,
+        deletePolicy: 'Oldest',
+      },
+    },
     template: {
       spec: {
         osDisk: {

@@ -4,8 +4,8 @@ local azure_cluster_identity = import 'templates/AzureClusterIdentity.libsonnet'
 local azure_machine_template_controlplane = import 'templates/AzureMachineTemplate-control-plane.libsonnet';
 local azure_machine_template_nodes = import 'templates/AzureMachineTemplate-nodes.libsonnet';
 local cluster = import 'templates/Cluster.libsonnet';
+local kubeadm_config_template_nodes = import 'templates/KubeadmConfigTemplate-nodes.libsonnet';
 local kubeadm_config_template_controlplane = import 'templates/KubeadmControlPlane-control-plane.libsonnet';
-local kubeadm_config_template_nodes = import 'templates/KubeadmControlPlane-nodes.libsonnet';
 local machine_deployment = import 'templates/MachineDeployment-nodes.libsonnet';
 
 config {

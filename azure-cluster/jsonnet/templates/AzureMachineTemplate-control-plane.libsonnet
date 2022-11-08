@@ -25,7 +25,7 @@
           diskSizeGB: $._config.controlplane.os.diskSizeGB,
           osType: 'Linux',
         },
-        sshPublicKey: '',
+        sshPublicKey: $._config.controlplane.sshPublicKey,
         vmSize: $._config.controlplane.vmSize,
       },
     },

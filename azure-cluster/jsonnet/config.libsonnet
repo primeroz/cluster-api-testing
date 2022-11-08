@@ -12,6 +12,7 @@
     cluster_identity_secret_namespace:: $._config.namespace,
     resource_group:: std.extVar('AZURE_RESOURCE_GROUP'),
     subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),
+    sshPublicKey: '',
 
     cluster+: {
       version: error 'cluster version must be specified',
@@ -30,6 +31,7 @@
         diskSizeGB: 50,
       },
       vmSize: 'Standard_D2s_v3',
+      sshPublicKey: $._config.sshPublicKey,
     },
 
     nodes+: {
@@ -38,6 +40,7 @@
         diskSizeGB: 50,
       },
       vmSize: 'Standard_D2s_v3',
+      sshPublicKey: $._config.sshPublicKey,
     },
 
   },
