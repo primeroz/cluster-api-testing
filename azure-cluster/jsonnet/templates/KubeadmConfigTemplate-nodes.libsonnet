@@ -5,6 +5,26 @@
     },
   },
 
+  mixins:: {
+    patchExternalCloudProvider: {
+      spec+: {
+        template+: {
+          spec+: {
+            joinConfiguration+: {
+              nodeRegistration+: {
+                kubeletExtraArgs+: {
+                  'cloud-provider': 'external',
+                  'feature-gates': 'CSIMigrationAzureDisk=true',
+                  'azure-container-registry-config': '/etc/kubernetes/azure.json',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
   apiVersion: 'bootstrap.cluster.x-k8s.io/v1beta1',
   kind: 'KubeadmConfigTemplate',
   metadata: {

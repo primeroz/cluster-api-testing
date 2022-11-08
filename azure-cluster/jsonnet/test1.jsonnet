@@ -37,12 +37,14 @@ cluster {
   },
 
   kubeadmConfigPool0:: kubeadm_config {
-    _config+:: $._config {
-      nodes+: {
-        instance: '0',
-      },
-    },
-  },
+                         _config+:: $._config {
+                           nodes+: {
+                             instance: '0',
+                           },
+                         },
+                       } +
+                       // Default to use external cloud provider
+                       kubeadm_config.mixins.patchExternalCloudProvider,
 
 
 }

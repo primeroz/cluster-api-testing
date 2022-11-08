@@ -1,6 +1,48 @@
 {
   _config+:: {},
 
+  mixins:: {
+    patchExternalCloudProvider: {
+      spec+: {
+        kubeadmConfigSpec+: {
+          initConfiguration+: {
+            nodeRegistration+: {
+              kubeletExtraArgs+: {
+                'cloud-provider': 'external',
+                'feature-gates': 'CSIMigrationAzureDisk=true',
+                'azure-container-registry-config': '/etc/kubernetes/azure.json',
+              },
+            },
+          },
+          joinConfiguration+: {
+            nodeRegistration+: {
+              kubeletExtraArgs+: {
+                'cloud-provider': 'external',
+                'feature-gates': 'CSIMigrationAzureDisk=true',
+                'azure-container-registry-config': '/etc/kubernetes/azure.json',
+              },
+            },
+          },
+          clusterConfiguration+: {
+            apiServer+: {
+              timeoutForControlPlane: '20m',
+              extraArgs+: {
+                'cloud-provider': 'external',
+              },
+            },
+            controllerManager+: {
+              extraArgs+: {
+                'cloud-provider': 'external',
+                'external-cloud-volume-plugin': 'azure',
+                'feature-gates': 'CSIMigrationAzureDisk=true',
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
   apiVersion: 'controlplane.cluster.x-k8s.io/v1beta1',
   kind: 'KubeadmControlPlane',
   metadata: {
