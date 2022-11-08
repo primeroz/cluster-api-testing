@@ -14,12 +14,12 @@ check:
 .PHONY: deploy
 deploy: check
 	@echo "Create Azure Group"
-	@az group create --location ${AZURE_LOCATION} -n ${AZURE_RG_NAME}  --managed-by ${AZURE_SUBSCRIPTION} --tags "env=testing scope=cluster-api"
+	@az group create --location ${AZURE_LOCATION} -n ${AZURE_RESOURCE_GROUP}  --managed-by ${AZURE_SUBSCRIPTION} --tags "env=testing scope=cluster-api"
 
 .PHONY: delete
 delete: check
 	@echo "Delete Azure Group"
-	@echo az group delete -n ${AZURE_RG_NAME} --force-deletion-types Microsoft.Compute/virtualMachines
+	@echo az group delete -n ${AZURE_RESOURCE_GROUP} --force-deletion-types Microsoft.Compute/virtualMachines
 
 .PHONY: display
 display: check

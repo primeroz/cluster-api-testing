@@ -52,4 +52,4 @@ delete:
 
 .PHONY: display
 display:
-	kubectl --context ${KCTX} cluster-info --context kind-${CLUSTER_NAME}
+	kubectl ${KCTX} cluster-info --context kind-${CLUSTER_NAME}

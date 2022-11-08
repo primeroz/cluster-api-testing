@@ -1,7 +1,7 @@
 #common variables shared accross Makefiles
 SHELL := bash -eo pipefail
 
-ENVIRONMENT ?= kind
+ENVIRONMENT ?= test-cluster-ephemeral
 
 ifndef ENVIRONMENT
 $(error the variable ENVIRONMENT is not defined, run using `ENVIRONMENT=kind make deploy-all')

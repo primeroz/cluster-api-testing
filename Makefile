@@ -1,5 +1,6 @@
 # https://raw.githubusercontent.com/FikaWorks/deploy-kubernetes-addons-makefile-example/master/Makefile
 include common.mk
+include env.kind.mk
 include env.$(ENVIRONMENT).mk
 
 .DEFAULT_GOAL := help

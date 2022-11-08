@@ -1,9 +1,6 @@
 # Safety net, make sure we are using the correct kubectl context before
 # deploying anything
 KUBE_CONTEXT ?= kind-cluster-api
-CLUSTER_NAME ?= cluster-api
-AZURE_RG_NAME ?= testClusterAPI
-AZURE_LOCATION ?= "westeurope"
 
 # Azure Keyvault name where secrets are stored (ie: cloudflare password)
 #AZURE_KEY_VAULT_NAME ?= my-infra
