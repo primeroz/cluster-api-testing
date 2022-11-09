@@ -11,6 +11,9 @@
     [if $._config.cluster.bastion then 'bastionSpec']: {
       azureBastion: {},
     },
+    additionalTags: {
+      clusterName: $._config.cluster_name,
+    },
     identityRef: {
       apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
       kind: 'AzureClusterIdentity',
@@ -22,9 +25,15 @@
         {
           name: 'control-plane-subnet',
           role: 'control-plane',
+          cidrBlocks:: [
+            '10.0.0.0/24',
+          ],
         },
         {
           name: 'node-subnet',
+          cidrBlocks:: [
+            '10.1.0.0/16',
+          ],
           natGateway: {
             name: 'node-natgateway',
           },
@@ -33,6 +42,9 @@
       ],
       vnet: {
         name: '%s-vnet' % $._config.cluster_name,
+        cidrBlocks:: [
+          '10.0.0.0/8',
+        ],
       },
     },
     resourceGroup: $._config.resource_group,

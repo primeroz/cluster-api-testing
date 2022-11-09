@@ -5,6 +5,7 @@ include ../common.mk
 current_dir = $(shell pwd)
 
 KUBECFG_COMMAND ?= show
+AZURE_CLUSTER ?= test1
 
 .PHONY: prep
 prep:
@@ -15,11 +16,12 @@ prep:
 .PHONY: generate
 generate: prep
 	@export AZURE_CLUSTER_IDENTITY_SECRET_NAME=$(AZURE_CLUSTER_IDENTITY_SECRET_NAME)
-	@kubecfg ${KUBECFG_COMMAND} jsonnet/test1.jsonnet \
+	@kubecfg ${KUBECFG_COMMAND} jsonnet/${AZURE_CLUSTER}.jsonnet \
     --ext-str="AZURE_SUBSCRIPTION" \
     --ext-str="AZURE_TENANT_ID" \
     --ext-str="AZURE_CLIENT_ID" \
-    --ext-str="AZURE_CLUSTER_IDENTITY_SECRET_NAME"
+    --ext-str="AZURE_CLUSTER_IDENTITY_SECRET_NAME" \
+    --ext-str="AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}"
 
 .PHONY: deploy
 deploy: generate

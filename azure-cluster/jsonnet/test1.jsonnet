@@ -13,38 +13,14 @@ cluster {
     //sshPublicKey: std.base64(importstr '/home/fciocchetti/.ssh/id_ed25519.pub'),
     sshPublicKey: std.base64(importstr '/home/fciocchetti/.ssh/id_rsa.pub'),  // only works with rsa key ???
 
+    azure_client_id:: std.extVar('AZURE_CLIENT_ID'),
+    azure_tenant_id:: std.extVar('AZURE_TENANT_ID'),
+    resource_group:: std.extVar('AZURE_RESOURCE_GROUP'),
+    subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),
+    cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
+
     cluster+: {
       version: 'v1.23.13',
     },
   },
-
-  // Need MachinePool FeatureFlag
-  azureMachinePool0:: azure_machine_pool {
-    _config+:: $._config {
-      nodes+: {
-        location: $._config.location,
-        instance: '0',
-      },
-    },
-  },
-
-  machinePool0:: machine_pool {
-    _config+:: $._config {
-      nodes+: {
-        instance: '0',
-      },
-    },
-  },
-
-  kubeadmConfigPool0:: kubeadm_config {
-                         _config+:: $._config {
-                           nodes+: {
-                             instance: '0',
-                           },
-                         },
-                       } +
-                       // Default to use external cloud provider
-                       kubeadm_config.mixins.patchExternalCloudProvider,
-
-
 }

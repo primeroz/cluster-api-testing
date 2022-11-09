@@ -1,6 +1,22 @@
 {
   _config+:: {},
 
+  mixins:: {
+    patchUserAssignedIdentity(providerID): {
+      spec+: {
+        template+: {
+          spec+: {
+            identity: 'UserAssigned',
+            userAssignedIdentities: [
+              { providerID: providerID },
+            ],
+          },
+        },
+      },
+    },
+  },
+
+
   apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
   kind: 'AzureMachineTemplate',
   metadata: {

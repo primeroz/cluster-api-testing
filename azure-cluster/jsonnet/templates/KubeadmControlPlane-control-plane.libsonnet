@@ -58,7 +58,7 @@
             'cloud-provider': 'azure',
           },
           extraVolumes: [
-            {
+            {  // XXX: Should we mount this when using UA user managed identity ?
               hostPath: '/etc/kubernetes/azure.json',
               mountPath: '/etc/kubernetes/azure.json',
               name: 'cloud-config',
@@ -73,6 +73,7 @@
             'cloud-config': '/etc/kubernetes/azure.json',
             'cloud-provider': 'azure',
             'cluster-name': $._config.cluster_name,
+            //'cluster-cidr': https://github.com/kubernetes-sigs/cluster-api-provider-azure/blob/0ecbf62ecca79af77d1d902a9e8d46c0a0ba38c1/templates/test/ci/cluster-template-prow-dual-stack.yaml#L85
           },
           extraVolumes: [
             {
@@ -158,7 +159,7 @@
           '/var/lib/etcddisk',
         ],
       ],
-      postKubeadmCommands: [],
+      postKubeadmCommands: [],  // XXX https://github.com/kubernetes-sigs/cluster-api-provider-azure/blob/0ecbf62ecca79af77d1d902a9e8d46c0a0ba38c1/templates/test/ci/cluster-template-prow-dual-stack.yaml#L146
       preKubeadmCommands: [],
     },
     machineTemplate: {

@@ -36,97 +36,103 @@ config {
   },
 
   // ControlPlane Resources
-  azureMachineTemplateControlPlane: azure_machine_template_controlplane {
-    _config+:: $._config,
+  controlPlane: {
+    azureMachineTemplate: azure_machine_template_controlplane {
+      _config+:: $._config,
+    },
+
+    kubeadmControl: kubeadm_control_plane {
+                      _config+:: $._config,
+                    } +
+                    // Default to use external cloud provider
+                    kubeadm_control_plane.mixins.patchExternalCloudProvider,
   },
 
-  kubeadmControlPlane: kubeadm_control_plane {
-                         _config+:: $._config,
-                       } +
-                       // Default to use external cloud provider
-                       kubeadm_control_plane.mixins.patchExternalCloudProvider,
+  // Nodes
+  nodesDeployments: {
+    local nodes = self,
 
-  // NodePools
-  azureMachineTemplateNodes1: azure_machine_template_nodes {
-    _config+:: $._config {
-      nodes+: {
-        instance: '1',
+    azureMachineTemplate:: azure_machine_template_nodes {},
+
+    azureMachineTemplateNodes1: nodes.azureMachineTemplate {
+      _config+:: $._config {
+        nodes+: {
+          instance: '1',
+        },
+      },
+    },
+
+    azureMachineTemplateNodes2: nodes.azureMachineTemplate {
+      _config+:: $._config {
+        nodes+: {
+          instance: '2',
+        },
+      },
+    },
+
+    azureMachineTemplateNodes3: nodes.azureMachineTemplate {
+      _config+:: $._config {
+        nodes+: {
+          instance: '3',
+        },
+      },
+    },
+
+    kubeadmConfig:: kubeadm_config_template_nodes {
+                    } +
+                    // Default to use external cloud provider
+                    kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
+
+    kubeadmNodes1: nodes.kubeadmConfig {
+      _config+:: $._config {
+        nodes+: {
+          instance: '1',
+        },
+      },
+    },
+
+    kubeadmNodes2: nodes.kubeadmConfig {
+      _config+:: $._config {
+        nodes+: {
+          instance: '2',
+        },
+      },
+    },
+
+    kubeadmNodes3: nodes.kubeadmConfig {
+      _config+:: $._config {
+        nodes+: {
+          instance: '3',
+        },
+      },
+    },
+
+    machineDeployment1: machine_deployment {
+      _config+:: $._config {
+        nodes+: {
+          instance: '1',
+          failureDomain: '1',
+        },
+      },
+    },
+
+    machineDeployment2: machine_deployment {
+      _config+:: $._config {
+        nodes+: {
+          instance: '2',
+          failureDomain: '2',
+        },
+      },
+    },
+
+    machineDeployment3: machine_deployment {
+      _config+:: $._config {
+        nodes+: {
+          instance: '3',
+          failureDomain: '3',
+        },
       },
     },
   },
-
-  azureMachineTemplateNodes2: azure_machine_template_nodes {
-    _config+:: $._config {
-      nodes+: {
-        instance: '2',
-      },
-    },
-  },
-
-  azureMachineTemplateNodes3: azure_machine_template_nodes {
-    _config+:: $._config {
-      nodes+: {
-        instance: '3',
-      },
-    },
-  },
-
-  kubeadmNodes1: kubeadm_config_template_nodes {
-                   _config+:: $._config {
-                     nodes+: {
-                       instance: '1',
-                     },
-                   },
-                 } +
-                 // Default to use external cloud provider
-                 kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
-
-  kubeadmNodes2: kubeadm_config_template_nodes {
-                   _config+:: $._config {
-                     nodes+: {
-                       instance: '2',
-                     },
-                   },
-                 } +
-                 // Default to use external cloud provider
-                 kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
-
-  kubeadmNodes3: kubeadm_config_template_nodes {
-                   _config+:: $._config {
-                     nodes+: {
-                       instance: '3',
-                     },
-                   },
-                 } +
-                 // Default to use external cloud provider
-                 kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
-
-  machineDeployment1: machine_deployment {
-    _config+:: $._config {
-      nodes+: {
-        instance: '1',
-        failureDomain: '1',
-      },
-    },
-  },
-
-  machineDeployment2: machine_deployment {
-    _config+:: $._config {
-      nodes+: {
-        instance: '2',
-        failureDomain: '2',
-      },
-    },
-  },
-
-  machineDeployment3: machine_deployment {
-    _config+:: $._config {
-      nodes+: {
-        instance: '3',
-        failureDomain: '3',
-      },
-    },
-  },
-
 
 }
