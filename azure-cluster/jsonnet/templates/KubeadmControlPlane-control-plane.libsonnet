@@ -56,9 +56,10 @@
           extraArgs: {
             'cloud-config': '/etc/kubernetes/azure.json',
             'cloud-provider': 'azure',
+            [if $._config.cluster.service_account_issuer != null then 'service-account-issuer']: $._config.cluster.service_account_issuer,
           },
           extraVolumes: [
-            {  // XXX: Should we mount this when using UA user managed identity ?
+            {
               hostPath: '/etc/kubernetes/azure.json',
               mountPath: '/etc/kubernetes/azure.json',
               name: 'cloud-config',

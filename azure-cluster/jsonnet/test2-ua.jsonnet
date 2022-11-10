@@ -18,16 +18,33 @@ cluster {
     cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
     user_assigned_identity_provider_id:: '/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s' % [$._config.subscription_id, $._config.resource_group, $._config.cluster_name],
 
+    controlplane+: {
+      replicas: 1,
+    },
+
     cluster+: {
+      service_account_issuer:: 'https://%s.blob.core.windows.net/%s/' % ['oidcissuer1f6ede0f', $._config.cluster_name],
     },
   },
 
   controlPlane+: {
-    azureMachineTemplate+: azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+    azureMachineTemplate+:
+      azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
+      azure_machine_template_control_plane.mixins.patchSetSpot,
   },
 
   nodesDeployments+: {
-    azureMachineTemplate+: azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+    azureMachineTemplate+:
+      azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
+      azure_machine_template_control_plane.mixins.patchSetSpot,
+
+    // Only deploy one machineDeployment
+    azureMachineTemplateNodes2:: null,
+    azureMachineTemplateNodes3:: null,
+    kubeadmNodes2:: null,
+    kubeadmNodes3:: null,
+    machineDeployment2:: null,
+    machineDeployment3:: null,
   },
 
 }

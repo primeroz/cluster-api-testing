@@ -15,6 +15,7 @@
     sshPublicKey: '',
 
     cluster+: {
+      service_account_issuer:: null,
       version: error 'cluster version is required',
       podCidrBlocks: ['192.168.0.0/16'],
       labels+: {

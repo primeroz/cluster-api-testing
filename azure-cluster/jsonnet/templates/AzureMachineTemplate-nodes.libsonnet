@@ -6,6 +6,11 @@
   },
 
   mixins:: {
+    patchSetSpot: {
+      spec+: {
+        spotVMOptions: {},
+      },
+    },
     patchUserAssignedIdentity(providerID): {
       spec+: {
         template+: {
