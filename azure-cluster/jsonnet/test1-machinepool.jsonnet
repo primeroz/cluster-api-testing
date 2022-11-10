@@ -14,7 +14,6 @@ cluster {
     sshPublicKey: std.base64(importstr '/home/fciocchetti/.ssh/id_rsa.pub'),  // only works with rsa key ???
 
     cluster+: {
-      version: 'v1.23.13',
     },
   },
 

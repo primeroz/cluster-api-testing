@@ -5,11 +5,3 @@ KUBE_CONTEXT ?= kind-cluster-api
 # Azure Keyvault name where secrets are stored (ie: cloudflare password)
 #AZURE_KEY_VAULT_NAME ?= my-infra
 
-# Applications to deploy, order is important
-APPS = \
-	azure-resource-group \
-  clusterctl \
-  azure-cluster
-
-# Ref: https://github.com/helm/charts/tree/master/stable/nginx-ingress
-NGINX_INGRESS_CHART_VERSION = 4.3.0

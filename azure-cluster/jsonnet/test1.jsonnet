@@ -20,7 +20,6 @@ cluster {
     cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
 
     cluster+: {
-      version: 'v1.23.13',
     },
   },
 }

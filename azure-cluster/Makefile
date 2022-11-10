@@ -21,6 +21,7 @@ generate: prep
     --ext-str="AZURE_TENANT_ID" \
     --ext-str="AZURE_CLIENT_ID" \
     --ext-str="AZURE_CLUSTER_IDENTITY_SECRET_NAME" \
+    --ext-str="KUBERNETES_VERSION" \
     --ext-str="AZURE_RESOURCE_GROUP=${AZURE_RESOURCE_GROUP}"
 
 .PHONY: deploy

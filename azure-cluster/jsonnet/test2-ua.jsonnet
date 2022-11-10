@@ -19,7 +19,6 @@ cluster {
     user_assigned_identity_provider_id:: '/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s' % [$._config.subscription_id, $._config.resource_group, $._config.cluster_name],
 
     cluster+: {
-      version: 'v1.23.13',
     },
   },
 

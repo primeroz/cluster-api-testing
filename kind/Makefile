@@ -42,13 +42,13 @@ create-kind-config-file:; @ eval "$$KIND_CLUSTER_FILE_CREATOR"
 
 .PHONY: deploy
 deploy: create-kind-config-file
-	kind create cluster --name ${CLUSTER_NAME} --config=${KIND_CONFIG_FILE_NAME} --image=kindest/node:v1.23.12 --wait=120s
+	kind create cluster --name ${KIND_NAME} --config=${KIND_CONFIG_FILE_NAME} --image=kindest/node:v1.23.12 --wait=120s
 	# Remove config file
 	@rm -f ${KIND_CONFIG_FILE_NAME}
 
 .PHONY: delete
 delete:
-	kind delete cluster --name ${CLUSTER_NAME}
+	kind delete cluster --name ${KIND_NAME}
 	@docker system prune -f
 
 .PHONY: display

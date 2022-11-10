@@ -17,8 +17,12 @@ config {
     resource_group:: 'testClusterAPI',
 
     cluster+: {
+      kubernetes_versions_map: {
+        '1.23': '1.23.13',
+      },
+
       bastion:: false,
-      version: error 'cluster version is required',
+      version: 'v%s' % $._config.cluster.kubernetes_versions_map[std.extVar('KUBERNETES_VERSION')],
     },
   },
 

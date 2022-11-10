@@ -15,7 +15,7 @@
     sshPublicKey: '',
 
     cluster+: {
-      version: error 'cluster version must be specified',
+      version: error 'cluster version is required',
       podCidrBlocks: ['192.168.0.0/16'],
       labels+: {
         cni: 'calico',
