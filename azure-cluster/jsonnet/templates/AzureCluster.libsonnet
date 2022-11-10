@@ -44,7 +44,7 @@
             '10.0.0.0/24',
           ],
         } +
-        $.mixins.patchSubnetServiceEndpoints,
+        {},  // Not supported in the CRD ? $.mixins.patchSubnetServiceEndpoints,
         {
           name: 'node-subnet',
           cidrBlocks: [
@@ -55,7 +55,7 @@
           },
           role: 'node',
         } +
-        $.mixins.patchSubnetServiceEndpoints,
+        {},  // Not supported in the CRD ? $.mixins.patchSubnetServiceEndpoints,
       ],
       vnet: {
         name: '%s-vnet' % $._config.cluster_name,

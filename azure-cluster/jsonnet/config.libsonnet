@@ -17,7 +17,8 @@
     cluster+: {
       service_account_issuer:: null,
       version: error 'cluster version is required',
-      podCidrBlocks: ['192.168.0.0/16'],
+      podsCidrBlocks: ['192.168.0.0/16'],
+      servicesCidrBlocks: ['10.96.0.0/16'],
       labels+: {
         cni: 'calico',
       },

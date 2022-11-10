@@ -24,7 +24,8 @@ cluster {
 
     cluster+: {
       service_account_issuer:: 'https://%s.blob.core.windows.net/%s/' % ['oidcissuer1f6ede0f', $._config.cluster_name],
-      podCidrBlocks:: [std.extVar('KUBERNETES_POD_CIDR_BLOCK')],
+      podsCidrBlocks:: [std.extVar('KUBERNETES_PODS_CIDR_BLOCK')],
+      servicesCidrBlocks:: [std.extVar('KUBERNETES_SERVICES_CIDR_BLOCK')],
     },
   },
 

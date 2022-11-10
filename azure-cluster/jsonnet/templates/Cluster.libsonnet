@@ -12,7 +12,10 @@
   spec: {
     clusterNetwork: {
       pods: {
-        cidrBlocks: $._config.cluster.podCidrBlocks,
+        cidrBlocks: $._config.cluster.podsCidrBlocks,
+      },
+      services: {
+        cidrBlocks: $._config.cluster.servicesCidrBlocks,
       },
     },
     controlPlaneRef: {
