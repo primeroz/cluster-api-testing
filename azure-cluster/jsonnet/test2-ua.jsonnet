@@ -36,17 +36,15 @@ cluster {
   },
 
   nodesDeployments+: {
-    azureMachineTemplate+:
-      azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
-      azure_machine_template_control_plane.mixins.patchSetSpot,
+    template+:: {
+      azureMachineTemplate+:
+        azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
+        azure_machine_template_control_plane.mixins.patchSetSpot,
+    },
 
     // Only deploy one machineDeployment
-    azureMachineTemplateNodes2:: null,
-    azureMachineTemplateNodes3:: null,
-    kubeadmNodes2:: null,
-    kubeadmNodes3:: null,
-    machineDeployment2:: null,
-    machineDeployment3:: null,
+    Nodes2:: null,
+    Nodes3:: null,
   },
 
 }

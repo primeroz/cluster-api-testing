@@ -7,6 +7,7 @@ local cluster = import 'templates/Cluster.libsonnet';
 local kubeadm_config_template_nodes = import 'templates/KubeadmConfigTemplate-nodes.libsonnet';
 local kubeadm_control_plane = import 'templates/KubeadmControlPlane-control-plane.libsonnet';
 local machine_deployment = import 'templates/MachineDeployment-nodes.libsonnet';
+local machine_healthcheck = import 'templates/MachineHealthCheck.libsonnet';
 
 config {
 
@@ -50,92 +51,88 @@ config {
                     } +
                     // Default to use external cloud provider
                     kubeadm_control_plane.mixins.patchExternalCloudProvider,
+
+    machineHealthCheck: machine_healthcheck {
+      _config+:: $._config {
+        nodes+: {
+          instance: 'control-plane',
+        },
+      },
+
+      spec+: {
+        maxUnhealthy: '100%',
+        nodeStartupTimeout:: null,
+        selector: {
+          matchLabels: {
+            'cluster.x-k8s.io/control-plane': '',
+          },
+        },
+      },
+    },
   },
 
   // Nodes
   nodesDeployments: {
     local nodes = self,
 
-    azureMachineTemplate:: azure_machine_template_nodes {},
+    template:: {
+      local template = self,
+      instance:: null,
+      failureDomain:: null,
 
-    azureMachineTemplateNodes1: nodes.azureMachineTemplate {
-      _config+:: $._config {
-        nodes+: {
-          instance: '1',
+      azureMachineTemplate: azure_machine_template_nodes {
+        _config+:: $._config {
+          nodes+: {
+            instance: template.instance,
+          },
         },
       },
+
+      kubeadmConfig: kubeadm_config_template_nodes {
+                       _config+:: $._config {
+                         nodes+: {
+                           instance: template.instance,
+                         },
+                       },
+                     } +
+                     // Default to use external cloud provider
+                     kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
+
+      machineDeployment: machine_deployment {
+        _config+:: $._config {
+          nodes+: {
+            instance: template.instance,
+            failureDomain: template.failureDomain,
+          },
+        },
+      },
+
+      machineHealthCheck: machine_healthcheck {
+        _config+:: $._config {
+          nodes+: {
+            instance: template.instance,
+            failureDomain: template.failureDomain,
+          },
+        },
+      },
+
+
     },
 
-    azureMachineTemplateNodes2: nodes.azureMachineTemplate {
-      _config+:: $._config {
-        nodes+: {
-          instance: '2',
-        },
-      },
+
+    Nodes1: nodes.template {
+      instance: '1',
+      failureDomain: '1',
     },
 
-    azureMachineTemplateNodes3: nodes.azureMachineTemplate {
-      _config+:: $._config {
-        nodes+: {
-          instance: '3',
-        },
-      },
+    Nodes2: nodes.template {
+      instance: '2',
+      failureDomain: '2',
     },
 
-    kubeadmConfig:: kubeadm_config_template_nodes {
-                    } +
-                    // Default to use external cloud provider
-                    kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
-
-    kubeadmNodes1: nodes.kubeadmConfig {
-      _config+:: $._config {
-        nodes+: {
-          instance: '1',
-        },
-      },
-    },
-
-    kubeadmNodes2: nodes.kubeadmConfig {
-      _config+:: $._config {
-        nodes+: {
-          instance: '2',
-        },
-      },
-    },
-
-    kubeadmNodes3: nodes.kubeadmConfig {
-      _config+:: $._config {
-        nodes+: {
-          instance: '3',
-        },
-      },
-    },
-
-    machineDeployment1: machine_deployment {
-      _config+:: $._config {
-        nodes+: {
-          instance: '1',
-          failureDomain: '1',
-        },
-      },
-    },
-
-    machineDeployment2: machine_deployment {
-      _config+:: $._config {
-        nodes+: {
-          instance: '2',
-          failureDomain: '2',
-        },
-      },
-    },
-
-    machineDeployment3: machine_deployment {
-      _config+:: $._config {
-        nodes+: {
-          instance: '3',
-          failureDomain: '3',
-        },
-      },
+    Nodes3: nodes.template {
+      instance: '3',
+      failureDomain: '3',
     },
   },
 
