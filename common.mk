@@ -1,8 +1,6 @@
 #common variables shared accross Makefiles
 SHELL := bash -eo pipefail
 
-ENVIRONMENT ?= test-cluster-ephemeral
-
 AZURE_CHECK_ACCOUNT ?= "Azure FC 1"
 
 ifndef ENVIRONMENT

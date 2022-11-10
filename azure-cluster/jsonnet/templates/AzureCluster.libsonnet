@@ -1,6 +1,21 @@
 {
   _config+:: {},
 
+  mixins:: {
+    patchSubnetServiceEndpoints: {
+      serviceEndpoints: [
+        {
+          service: 'Microsoft.AzureActiveDirectory',
+          locations: ['*'],
+        },
+        {
+          service: 'Microsoft.Storage',
+          locations: [$._config.location],
+        },
+      ],
+    },
+  },
+
   apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
   kind: 'AzureCluster',
   metadata: {
@@ -25,24 +40,26 @@
         {
           name: 'control-plane-subnet',
           role: 'control-plane',
-          cidrBlocks:: [
+          cidrBlocks: [
             '10.0.0.0/24',
           ],
-        },
+        } +
+        $.mixins.patchSubnetServiceEndpoints,
         {
           name: 'node-subnet',
-          cidrBlocks:: [
+          cidrBlocks: [
             '10.1.0.0/16',
           ],
           natGateway: {
             name: 'node-natgateway',
           },
           role: 'node',
-        },
+        } +
+        $.mixins.patchSubnetServiceEndpoints,
       ],
       vnet: {
         name: '%s-vnet' % $._config.cluster_name,
-        cidrBlocks:: [
+        cidrBlocks: [
           '10.0.0.0/8',
         ],
       },
