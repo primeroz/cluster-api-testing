@@ -9,7 +9,9 @@
     patchSetSpot: {
       spec+: {
         template+: {
-          spotVMOptions: {},
+          spec+: {
+            spotVMOptions: {},
+          },
         },
       },
     },
