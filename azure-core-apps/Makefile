@@ -45,8 +45,15 @@ azuredisk-csi:
 azure-cloud-provider:
 	@${HELM_COMMAND} install cloud-provider-azure/cloud-provider-azure --version=${CLOUD_PROVIDER_AZURE_CHART_VERSION} --generate-name --set infra.clusterName=test2-ua --set cloudControllerManager.clusterCIDR=${CLOUD_PROVIDER_AZURE_CIDR} --set cloudControllerManager.configureCloudRoutes=${CLOUD_PROVIDER_AZURE_CREATE_ROUTES} --set cloudControllerManager.imageTag=v${CLOUD_PROVIDER_AZURE_IMAGE_VERSION} --set cloudNodeManager.imageTag=v${CLOUD_PROVIDER_AZURE_IMAGE_VERSION}
 
+.PHONY: azure-workload-identity
+azure-workload-identity:
+	@${HELM_COMMAND} install workload-identity-webhook azure-workload-identity/workload-identity-webhook \
+   --namespace azure-workload-identity-system \
+   --create-namespace \
+   --set azureTenantID="$(AZURE_TENANT_ID)"
+
 .PHONY: deploy
-deploy: calico storage azuredisk-csi host-configurator 
+deploy: calico storage azuredisk-csi host-configurator azure-workload-identity
 
 .PHONY: delete
 delete:
