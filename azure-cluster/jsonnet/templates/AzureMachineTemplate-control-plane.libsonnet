@@ -35,6 +35,9 @@
   spec: {
     template: {
       spec: {
+        AdditionalTags: {
+          clusterName: $._config.cluster_name,
+        },
         dataDisks: [
           {
             diskSizeGB: $._config.controlplane.etcddisk.sizeGB,

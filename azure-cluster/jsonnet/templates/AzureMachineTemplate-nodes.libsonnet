@@ -38,6 +38,10 @@
   spec: {
     template: {
       spec: {
+        AdditionalTags: {
+          clusterName: $._config.cluster_name,
+          nodepool: $.metadata.name,
+        },
         osDisk: {
           cachingType: 'ReadOnly',
           diffDiskSettings: {
@@ -45,6 +49,9 @@
           },
           diskSizeGB: $._config.nodes.os.diskSizeGB,
           osType: 'Linux',
+          managedDisk: {
+            storageAccountType: 'Standard_LRS',
+          },
         },
         sshPublicKey: $._config.controlplane.sshPublicKey,
         vmSize: $._config.nodes.vmSize,

@@ -10,6 +10,7 @@
     namespace: $._config.namespace,
   },
   spec: {
+    paused: $._config.cluster.paused,
     clusterNetwork: {
       pods: {
         cidrBlocks: $._config.cluster.podsCidrBlocks,

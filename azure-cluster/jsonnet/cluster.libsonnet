@@ -19,7 +19,9 @@ config {
 
     cluster+: {
       kubernetes_versions_map: {
-        '1.23': '1.23.13',
+        '1.23': '1.23.14',
+        '1.24': '1.24.8',
+        '1.25': '1.25.4',
       },
 
       bastion:: false,

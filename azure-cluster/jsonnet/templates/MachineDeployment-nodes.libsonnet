@@ -3,6 +3,8 @@
     nodes+: {
       instance: error 'instance for this nodepool must be specified',
       failureDomain: null,
+      paused: false,
+      minReadySeconds: 30,
     },
   },
 
@@ -13,8 +15,10 @@
     namespace: $._config.namespace,
   },
   spec: {
+    paused: $._config.nodes.paused,
     clusterName: $._config.cluster_name,
     replicas: $._config.nodes.replicas,
+    minReadySeconds: $._config.nodes.minReadySeconds,
     selector: {
       matchLabels: null,
     },
