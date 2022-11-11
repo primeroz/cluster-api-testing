@@ -35,7 +35,7 @@
   spec: {
     template: {
       spec: {
-        AdditionalTags: {
+        additionalTags: {
           clusterName: $._config.cluster_name,
         },
         dataDisks: [
