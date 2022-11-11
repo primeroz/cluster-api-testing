@@ -44,6 +44,15 @@ cluster {
       azureMachineTemplate+:
         azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
       //azure_machine_template_control_plane.mixins.patchSetSpot,
+
+      machineDeployment+: {
+        metadata+: {
+          annotations+: {
+            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-min-size': 1,
+            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-max-size': 3,
+          },
+        },
+      },
     },
 
     // Only deploy one machineDeployment
