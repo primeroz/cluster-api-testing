@@ -20,12 +20,10 @@ cluster {
 
     controlplane+: {
       replicas: 1,
-      vmSize: 'Standard_D1_v2',
     },
 
     nodes+: {
       replicas: 1,
-      vmSize: 'Standard_D1_v2',
     },
 
     cluster+: {
@@ -44,8 +42,8 @@ cluster {
   nodesDeployments+: {
     template+:: {
       azureMachineTemplate+:
-        azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
-        azure_machine_template_control_plane.mixins.patchSetSpot,
+        azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+      //azure_machine_template_control_plane.mixins.patchSetSpot,
     },
 
     // Only deploy one machineDeployment

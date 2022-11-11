@@ -9,8 +9,6 @@ endif
 
 CLUSTER_NAMESPACE ?= aks
 KIND_NAME ?= cluster-api
-AZURE_CONTROL_PLANE_MACHINE_TYPE ?= Standard_D2s_v3
-AZURE_NODE_MACHINE_TYPE ?= Standard_D2s_v3
 CLUSTER_IDENTITY_NAME ?= cluster-identity
 AZURE_LOCATION ?= westeurope
 AZURE_RESOURCE_GROUP ?= testClusterAPI
