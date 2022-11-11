@@ -23,6 +23,11 @@
       matchLabels: null,
     },
     template: {
+      metadata: {
+        labels: {
+          owner: 'team-fake',
+        },
+      },
       spec: {
         bootstrap: {
           configRef: {

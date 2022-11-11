@@ -11,5 +11,6 @@ APPS = \
   clusterctl \
   azure-cluster \
   azure-cloud-provider \
-  azure-core-apps
+  azure-core-apps \
+  azure-cluster-api-autoscaler
 
