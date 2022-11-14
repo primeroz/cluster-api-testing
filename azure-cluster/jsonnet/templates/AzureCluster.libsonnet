@@ -69,7 +69,7 @@
                   peerings: [
                     {
                       resourceGroup: $._config.resource_group,
-                      remoteVnetName: $._config.management_vnet,
+                      remoteVnetName: $._config.management_network_name,
                     },
                   ],
                 }
