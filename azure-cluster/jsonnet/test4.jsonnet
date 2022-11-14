@@ -53,7 +53,8 @@ cluster {
   nodesDeployments+: {
     template+:: {
       azureMachineTemplate+:
-        azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+        azure_machine_template_nodes.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id) +
+        azure_machine_template_control_plane.mixins.patchPrivateCluster,
       //azure_machine_template_control_plane.mixins.patchSetSpot,
 
       machineDeployment+: {

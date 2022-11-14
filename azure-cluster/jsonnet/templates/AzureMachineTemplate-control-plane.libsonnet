@@ -2,6 +2,15 @@
   _config+:: {},
 
   mixins:: {
+    patchPrivateCluster: {
+      spec+: {
+        template+: {
+          spec+: {
+            allocatePublicIP: false,
+          },
+        },
+      },
+    },
     patchSetSpot: {
       spec+: {
         template+: {
