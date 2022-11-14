@@ -5,12 +5,18 @@
     patchPrivateCluster: {
       spec+: {
         networkSpec+: {
-          controlPlaneOutboundLB: {
-            frontendIPsCount: 1,
-          },
-          nodeOutboundLB: {
-            frontendIPsCount: 1,
-          },
+          // Use Nat Gateway Instead
+          // controlPlaneOutboundLB: {
+          //   frontendIPsCount: 1,
+          // },
+          // nodeOutboundLB: {
+          //   frontendIPsCount: 1,
+          // },
+          subnets: [s + (if s.name == 'control-plane-subnet' then {
+                           natGateway: {
+                             name: 'control-plane-natgateway',
+                           },
+                         } else {}) for s in super.subnets],
           apiServerLB: {
             type: 'Internal',
             frontendIPs: [
