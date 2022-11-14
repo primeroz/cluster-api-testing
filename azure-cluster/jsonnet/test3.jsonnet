@@ -48,8 +48,8 @@ cluster {
       machineDeployment+: {
         metadata+: {
           annotations+: {
-            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-min-size': 1,
-            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-max-size': 3,
+            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-min-size': '1',
+            'cluster.x-k8s.io/cluster-api-autoscaler-node-group-max-size': '3',
           },
         },
       },
