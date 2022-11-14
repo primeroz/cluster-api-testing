@@ -64,7 +64,7 @@
               ],
             } +
             (
-              if std.get($._config, 'management_vnet', null) != null then
+              if std.get($._config, 'management_network_name', null) != null then
                 {
                   peerings: [
                     {
