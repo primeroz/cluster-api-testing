@@ -16,6 +16,7 @@
 
     cluster+: {
       paused:: false,
+      type:: 'public',
       service_account_issuer:: null,
       version: error 'cluster version is required',
       podsCidrBlocks: ['192.168.0.0/16'],

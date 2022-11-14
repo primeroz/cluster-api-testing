@@ -58,9 +58,30 @@
         {},  // Not supported in the CRD ? $.mixins.patchSubnetServiceEndpoints,
       ],
       vnet: {
-        name: '%s-vnet' % $._config.cluster_name,
-        cidrBlocks: [
-          '10.0.0.0/8',
+              name: '%s-vnet' % $._config.cluster_name,
+              cidrBlocks: [
+                '10.0.0.0/8',
+              ],
+            } +
+            (
+              if std.get($._config, 'management_vnet', null) != null then
+                {
+                  peerings: [
+                    {
+                      resourceGroup: $._config.resource_group,
+                      remoteVnetName: $._config.management_vnet,
+                    },
+                  ],
+                }
+              else {}
+            ),
+      [if $._config.cluster.type == 'private' then 'apiServerLB']: {
+        type: 'Internal',
+        frontendIPs: [
+          {
+            name: 'lb-private-ip-frontend',
+            privateIP: '10.0.0.100',
+          },
         ],
       },
     },
