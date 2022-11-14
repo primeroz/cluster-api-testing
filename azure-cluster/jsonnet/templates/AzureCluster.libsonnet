@@ -6,10 +6,10 @@
       spec+: {
         networkSpec+: {
           controlPlaneOutboundLB: {
-            frontendIPsCount: '1',
+            frontendIPsCount: 1,
           },
           nodeOutboundLB: {
-            frontendIPsCount: '1',
+            frontendIPsCount: 1,
           },
           apiServerLB: {
             type: 'Internal',
