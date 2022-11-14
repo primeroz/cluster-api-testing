@@ -46,7 +46,7 @@ cluster {
       azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
     //azure_machine_template_control_plane.mixins.patchSetSpot, // not enough quota for more than 3 cpu on spot for now
 
-    kubeAdmControl+:
+    kubeadmControl+:
       kubeadm_control_plane.mixins.patchPrivateCluster,
   },
 
