@@ -39,7 +39,7 @@ cluster {
 
   azureCluster+:
     azure_cluster.mixins.patchPrivateCluster +
-    azure_cluster.mixins.patchNetworkPeering($._config.reousrce_group, $._config.management_network_name),
+    azure_cluster.mixins.patchNetworkPeering($._config.resource_group, $._config.management_network_name),
 
   controlPlane+: {
     azureMachineTemplate+:
