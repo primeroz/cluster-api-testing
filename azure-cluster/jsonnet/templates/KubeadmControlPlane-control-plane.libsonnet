@@ -6,10 +6,10 @@
       spec+: {
         kubeadmConfigSpec+: {
           preKubeadmCommands: [
-            "if [ -f /tmp/kubeadm.yaml ] || [ -f /run/kubeadm/kubeadm.yaml ]; then echo '127.0.0.1   apiserver.${CLUSTER_NAME}.capz.io apiserver' >> /etc/hosts; fi",
+            "if [ -f /tmp/kubeadm.yaml ] || [ -f /run/kubeadm/kubeadm.yaml ]; then echo '127.0.0.1   apiserver.%s.capz.io apiserver' >> /etc/hosts; fi" % $._config.cluster_name,
           ],
           postKubeadmCommands: [
-            "if [ -f /tmp/kubeadm-join-config.yaml ] || [ -f /run/kubeadm/kubeadm-join-config.yaml ]; then echo '127.0.0.1   apiserver.${CLUSTER_NAME}.capz.io apiserver' >> /etc/hosts; fi",
+            "if [ -f /tmp/kubeadm-join-config.yaml ] || [ -f /run/kubeadm/kubeadm-join-config.yaml ]; then echo '127.0.0.1   apiserver.%s.capz.io apiserver' >> /etc/hosts; fi" % $._config.cluster_name,
           ],
         },
       },
