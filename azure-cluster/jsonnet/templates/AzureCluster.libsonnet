@@ -10,9 +10,9 @@
             frontendIPsCount: 1,
           },
           // Use Nat Gateway Instead
-          // nodeOutboundLB: {
-          //   frontendIPsCount: 1,
-          // },
+          nodeOutboundLB: {
+            frontendIPsCount: 1,
+          },
           apiServerLB: {
             type: 'Internal',
             frontendIPs: [
