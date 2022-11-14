@@ -14,7 +14,7 @@
           // },
           subnets: [s + (if s.name == 'control-plane-subnet' then {
                            natGateway: {
-                             name: 'control-plane-natgateway',
+                             name: 'cplane-nat',
                            },
                          } else {}) for s in super.subnets],
           apiServerLB: {
