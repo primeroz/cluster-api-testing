@@ -70,6 +70,9 @@ azure-cluster-api:
     --set extraArgs.status-config-map-name=cluster-autoscaler-status \
     --set extraArgs.v=4 \
     --set extraArgs.cluster-name=$(CLUSTER_NAME) \
+    --set extraArgs.skip-nodes-with-local-storage=false \
+    --set extraArgs.emit-per-nodegroup-metrics=true \
+    --set extraArgs.cordon-node-before-terminating=true \
     --set image.tag=v$(CLUSTER_AUTOSCALER_VERSION) \
     --set rbac.clusterScoped=false
 
