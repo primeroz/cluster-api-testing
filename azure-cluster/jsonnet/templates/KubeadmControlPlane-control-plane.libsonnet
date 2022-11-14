@@ -2,6 +2,18 @@
   _config+:: {},
 
   mixins:: {
+    patchPrivateCluster: {
+      spec+: {
+        kubeadmConfigSpec+: {
+          preKubeadmCommands: [
+            "if [ -f /tmp/kubeadm.yaml ] || [ -f /run/kubeadm/kubeadm.yaml ]; then echo '127.0.0.1   apiserver.${CLUSTER_NAME}.capz.io apiserver' >> /etc/hosts; fi",
+          ],
+          postKubeadmCommands: [
+            "if [ -f /tmp/kubeadm-join-config.yaml ] || [ -f /run/kubeadm/kubeadm-join-config.yaml ]; then echo '127.0.0.1   apiserver.${CLUSTER_NAME}.capz.io apiserver' >> /etc/hosts; fi",
+          ],
+        },
+      },
+    },
     patchExternalCloudProvider: {
       spec+: {
         kubeadmConfigSpec+: {

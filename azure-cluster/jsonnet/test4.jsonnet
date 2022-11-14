@@ -1,6 +1,8 @@
 local cluster = import 'cluster.libsonnet';
+local azure_cluster = import 'templates/AzureCluster.libsonnet';
 local azure_machine_template_control_plane = import 'templates/AzureMachineTemplate-control-plane.libsonnet';
 local azure_machine_template_nodes = import 'templates/AzureMachineTemplate-nodes.libsonnet';
+local kubeadm_control_plane = import 'templates/KubeadmControlPlane-control-plane.libsonnet';
 
 
 cluster {
@@ -29,17 +31,23 @@ cluster {
     },
 
     cluster+: {
-      type:: 'private',
       service_account_issuer:: 'https://%s.blob.core.windows.net/%s/' % ['oidcissuer1f6ede0f', $._config.cluster_name],
       podsCidrBlocks:: [std.extVar('KUBERNETES_PODS_CIDR_BLOCK')],
       servicesCidrBlocks:: [std.extVar('KUBERNETES_SERVICES_CIDR_BLOCK')],
     },
   },
 
+  azureCluster+:
+    azure_cluster.mixins.patchPrivateCluster,
+    azure_cluster.mixins.patchNetworkPeering($._config.reousrce_group, $._config.management_network_name),
+
   controlPlane+: {
     azureMachineTemplate+:
       azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
     //azure_machine_template_control_plane.mixins.patchSetSpot, // not enough quota for more than 3 cpu on spot for now
+
+    kubeAdmControl+:
+      kubeadm_control_plane.mixins.patchPrivateCluster,
   },
 
   nodesDeployments+: {
