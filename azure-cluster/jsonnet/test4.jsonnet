@@ -47,7 +47,7 @@ cluster {
     //azure_machine_template_control_plane.mixins.patchSetSpot, // not enough quota for more than 3 cpu on spot for now
 
     kubeadmControl+:
-      kubeadm_control_plane.mixins.patchPrivateCluster,
+      kubeadm_control_plane.mixins.patchPrivateCluster($._config.cluster_name),
   },
 
   nodesDeployments+: {
