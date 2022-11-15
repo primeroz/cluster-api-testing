@@ -18,7 +18,7 @@
   },
   spec: {
     clusterName: $._config.cluster_name,
-    [if std.length($.config.nodes.failureDomains) > 0 then 'failureDomains']: $._config.nodes.failureDomains,
+    [if std.length($._config.nodes.failureDomains) > 0 then 'failureDomains']: $._config.nodes.failureDomains,
     replicas: $._config.nodes.replicas,
     template: {
       spec: {

@@ -3,7 +3,10 @@ include ../common.mk
 
 .PHONY: init
 init:
-	@clusterctl init --infrastructure azure
+	@export EXP_MACHINE_POOL=true && \
+	export EXP_CLUSTER_RESOURCE_SET=true && \
+	export CLUSTER_TOPOLOGY=true && \
+	clusterctl init --infrastructure azure
 
 .PHONY: upgrade
 upgrade:

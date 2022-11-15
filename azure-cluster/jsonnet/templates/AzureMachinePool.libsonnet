@@ -5,6 +5,24 @@
     },
   },
 
+  mixins:: {
+    patchSetSpot: {
+      spec+: {
+        template+: {
+          spotVMOptions: {},
+        },
+      },
+    },
+    patchUserAssignedIdentity(providerID): {
+      spec+: {
+        identity: 'UserAssigned',
+        userAssignedIdentities: [
+          { providerID: providerID },
+        ],
+      },
+    },
+  },
+
   apiVersion: 'infrastructure.cluster.x-k8s.io/v1beta1',
   kind: 'AzureMachinePool',
   metadata: {
@@ -12,6 +30,10 @@
     namespace: $._config.namespace,
   },
   spec: {
+    additionalTags: {
+      clusterName: $._config.cluster_name,
+      nodepool: $.metadata.name,
+    },
     location: $._config.nodes.location,
     strategy: {
       type: 'RollingUpdate',
