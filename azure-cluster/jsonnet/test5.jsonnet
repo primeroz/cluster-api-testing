@@ -40,21 +40,22 @@ cluster {
 
   // Need MachinePool FeatureFlag
   azureMachinePool0: azure_machine_pool {
-                       _config+:: $._config {
-                         nodes+: {
-                           location: $._config.location,
-                           instance: '0',
-                         },
-                       },
-                     } +
-                     //azure_machine_pool.mixins.patchSetSpot + // not enough quota :(
-                     azure_machine_pool.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+    _config+:: $._config {
+      nodes+: {
+        location: $._config.location,
+        instance: '0',
+      },
+    },
+  },
+  //azure_machine_pool.mixins.patchSetSpot + // not enough quota :(
+  //azure_machine_pool.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
 
   machinePool0: machine_pool {
     _config+:: $._config {
       nodes+: {
         instance: '0',
         replicas: 2,
+        failureDomains: [],
       },
     },
   },
