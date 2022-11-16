@@ -15,7 +15,7 @@ cluster {
 
     azure_client_id:: std.extVar('AZURE_CLIENT_ID'),
     azure_tenant_id:: std.extVar('AZURE_TENANT_ID'),
-    resource_group:: 'test5Cluster',
+    resource_group:: 'test5cluster',
     subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),
     cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
     user_assigned_identity_provider_id:: '/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s' % [$._config.subscription_id, $._config.resource_group, $._config.cluster_name],
@@ -25,40 +25,31 @@ cluster {
     },
 
     cluster+: {
-      addTags:: false,
-      addPaused:: false,
-      machineHC:: false,
-      externalCloudProvider: false,
-      //service_account_issuer:: 'https://%s.blob.core.windows.net/%s/' % ['oidcissuer1f6ede0f', $._config.cluster_name],
-      //podsCidrBlocks:: [std.extVar('KUBERNETES_PODS_CIDR_BLOCK')],
-      podsCidrBlocks:: ['192.168.0.0/16'],
-      //servicesCidrBlocks:: [std.extVar('KUBERNETES_SERVICES_CIDR_BLOCK')],
-      servicesCidrBlocks:: null,
-      controlPlaneSubnet:: null,
-      nodeSubnet:: null,
-      vnetSubnet:: null,
-      privateApiLbIp:: null,
+      externalCloudProvider: true,
+      service_account_issuer:: 'https://%s.blob.core.windows.net/%s/' % ['oidcissuer1f6ede0f', $._config.cluster_name],
+      podsCidrBlocks:: [std.extVar('KUBERNETES_PODS_CIDR_BLOCK')],
+      servicesCidrBlocks:: [std.extVar('KUBERNETES_SERVICES_CIDR_BLOCK')],
     },
   },
 
   controlPlane+: {
-    azureMachineTemplate+: {},
-    //azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+    azureMachineTemplate+:
+      azure_machine_template_control_plane.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
   },
 
   nodesDeployments:: null,
 
   // Need MachinePool FeatureFlag
   azureMachinePool0: azure_machine_pool {
-    _config+:: $._config {
-      nodes+: {
-        location: $._config.location,
-        instance: '0',
-      },
-    },
-  },
-  //azure_machine_pool.mixins.patchSetSpot + // not enough quota :(
-  //azure_machine_pool.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
+                       _config+:: $._config {
+                         nodes+: {
+                           location: $._config.location,
+                           instance: '0',
+                         },
+                       },
+                     } +
+                     //azure_machine_pool.mixins.patchSetSpot + // not enough quota :(
+                     azure_machine_pool.mixins.patchUserAssignedIdentity($._config.user_assigned_identity_provider_id),
 
   machinePool0: machine_pool {
     _config+:: $._config {

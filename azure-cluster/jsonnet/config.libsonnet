@@ -25,7 +25,7 @@
       podsCidrBlocks: ['192.168.0.0/16'],
       servicesCidrBlocks: ['10.96.0.0/16'],
       nodeSubnet: '10.1.0.0/16',
-      controPlaneSubnet: '10.0.0.0/24',
+      controlPlaneSubnet: '10.0.0.0/24',
       vnetSubnet: '10.0.0.0/8',
       privateApiLbIp: '10.0.0.100',
       labels+: {
