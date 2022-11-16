@@ -10,12 +10,12 @@
     namespace: $._config.namespace,
   },
   spec: {
-    paused: $._config.cluster.paused,
+    [if $._config.cluster.addPaused then 'paused']: $._config.cluster.paused,
     clusterNetwork: {
       pods: {
         cidrBlocks: $._config.cluster.podsCidrBlocks,
       },
-      services: {
+      [if $._config.cluster.servicesCidrBlocks != null then 'services']: {
         cidrBlocks: $._config.cluster.servicesCidrBlocks,
       },
     },

@@ -44,7 +44,7 @@
   spec: {
     template: {
       spec: {
-        additionalTags: {
+        [if $._config.cluster.addTags then 'additionalTags']: {
           clusterName: $._config.cluster_name,
         },
         dataDisks: [

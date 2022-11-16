@@ -51,6 +51,5 @@
         name: '{{ ds.meta_data["local_hostname"] }}',
       },
     },
-    preKubeadmCommands: [],
   },
 }

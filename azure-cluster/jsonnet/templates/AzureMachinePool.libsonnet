@@ -30,7 +30,7 @@
     namespace: $._config.namespace,
   },
   spec: {
-    additionalTags: {
+    [if $._config.cluster.addTags then 'additionalTags']: {
       clusterName: $._config.cluster_name,
       nodepool: $.metadata.name,
     },
@@ -48,6 +48,9 @@
         cachingType: 'ReadOnly',
         diffDiskSettings: {
           option: 'Local',
+        },
+        managedDisk: {
+          storageAccountType: 'Standard_LRS',
         },
         diskSizeGB: $._config.nodes.os.diskSizeGB,
         osType: 'Linux',

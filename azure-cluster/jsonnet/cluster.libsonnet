@@ -24,6 +24,7 @@ config {
         '1.25': '1.25.3',
       },
 
+      externalCloudProvider:: true,
       bastion:: false,
       version: 'v%s' % $._config.cluster.kubernetes_versions_map[std.extVar('KUBERNETES_VERSION')],
     },
@@ -51,10 +52,13 @@ config {
     kubeadmControl: kubeadm_control_plane {
                       _config+:: $._config,
                     } +
-                    // Default to use external cloud provider
-                    kubeadm_control_plane.mixins.patchExternalCloudProvider,
+                    (
+                      if $._config.cluster.externalCloudProvider then
+                        kubeadm_control_plane.mixins.patchExternalCloudProvider
+                      else {}
+                    ),
 
-    machineHealthCheck: machine_healthcheck {
+    [if $._config.cluster.machineHC then 'machineHealthCheck']: machine_healthcheck {
       _config+:: $._config {
         nodes+: {
           instance: 'control-plane',
@@ -97,8 +101,11 @@ config {
                          },
                        },
                      } +
-                     // Default to use external cloud provider
-                     kubeadm_config_template_nodes.mixins.patchExternalCloudProvider,
+                     (
+                       if $._config.cluster.externalCloudProvider then
+                         kubeadm_control_plane.mixins.patchExternalCloudProvider
+                       else {}
+                     ),
 
       machineDeployment: machine_deployment {
         _config+:: $._config {
@@ -109,7 +116,7 @@ config {
         },
       },
 
-      machineHealthCheck: machine_healthcheck {
+      [if $._config.cluster.machineHC then 'machineHealthCheck']: machine_healthcheck {
         _config+:: $._config {
           nodes+: {
             instance: template.instance,

@@ -18,7 +18,7 @@
             frontendIPs: [
               {
                 name: 'lb-private-ip-frontend',
-                privateIP: '10.0.0.100',
+                privateIP: $._config.cluster.privateApiLbIp,
               },
             ],
           },
@@ -63,7 +63,7 @@
     [if $._config.cluster.bastion then 'bastionSpec']: {
       azureBastion: {},
     },
-    additionalTags: {
+    [if $._config.cluster.addTags then 'additionalTags']: {
       clusterName: $._config.cluster_name,
     },
     identityRef: {
@@ -77,15 +77,15 @@
         {
           name: 'control-plane-subnet',
           role: 'control-plane',
-          cidrBlocks: [
-            '10.0.0.0/24',
+          [if $._config.cluster.nodeSubnet != null then 'cidrBlocks']: [
+            $._config.cluster.nodeSubnet,
           ],
         } +
         {},  // Not supported in the CRD ? $.mixins.patchSubnetServiceEndpoints,
         {
           name: 'node-subnet',
-          cidrBlocks: [
-            '10.1.0.0/16',
+          [if $._config.cluster.controlPlaneSubnet != null then 'cidrBlocks']: [
+            $._config.cluster.controlPlaneSubnet,
           ],
           natGateway: {
             name: 'node-natgateway',
@@ -96,8 +96,8 @@
       ],
       vnet: {
         name: '%s-vnet' % $._config.cluster_name,
-        cidrBlocks: [
-          '10.0.0.0/8',
+        [if $._config.cluster.vnetSubnet != null then 'cidrBlocks']: [
+          $._config.cluster.vnetSubnet,
         ],
       },
     },
