@@ -8,17 +8,18 @@ local machine_pool = import 'templates/MachinePool.libsonnet';
 cluster {
 
   _config+:: {
-    cluster_name: 'upstream',
-    namespace: 'default',
+    cluster_name: 'test5',
+    namespace: 'aks',
     location: 'westeurope',
     //sshPublicKey: std.base64(importstr '/home/fciocchetti/.ssh/id_rsa.pub'),  // only works with rsa key ???
     sshPublicKey: '',
 
     azure_client_id:: std.extVar('AZURE_CLIENT_ID'),
     azure_tenant_id:: std.extVar('AZURE_TENANT_ID'),
-    resource_group:: 'upstream',
+    resource_group:: 'test5cluster',
     subscription_id:: std.extVar('AZURE_SUBSCRIPTION'),
     cluster_identity_secret_name:: std.extVar('AZURE_CLUSTER_IDENTITY_SECRET_NAME'),
+    cluster_identity_secret_namespace: 'default',
     cluster_identity_name: 'cluster-identity',
     user_assigned_identity_provider_id:: '/subscriptions/%s/resourceGroups/%s/providers/Microsoft.ManagedIdentity/userAssignedIdentities/%s' % [$._config.subscription_id, $._config.resource_group, $._config.cluster_name],
 
