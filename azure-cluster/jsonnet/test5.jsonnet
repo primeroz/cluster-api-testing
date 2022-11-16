@@ -56,7 +56,6 @@ cluster {
       nodes+: {
         instance: '0',
         replicas: 2,
-        failureDomains: [],
       },
     },
   },
