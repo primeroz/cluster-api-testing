@@ -6,6 +6,7 @@ current_dir = $(shell pwd)
 
 CONTEXT_FILE ?= /dev/null
 KUBECTL_COMMAND ?= kubectl --kubeconfig=${CONTEXT_FILE}
+CILIUM_COMMAND ?= KUBECONFIG=${CONTEXT_FILE} cilium
 HELM_COMMAND ?= helm --kubeconfig=${CONTEXT_FILE}
 
 ifeq ($(KUBERNETES_VERSION), 1.23)
@@ -27,6 +28,11 @@ storage:
 .PHONY: calico
 calico:
 	@${KUBECTL_COMMAND} apply -f https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/main/templates/addons/calico.yaml
+
+.PHONY: cilium
+cilium:
+	@${CILIUM_COMMAND} cilium install --helm-set "ipam.operator.clusterPoolIPv4PodCIDR=$(KUBERNETES_PODS_CIDR_BLOCK),ipam.operator.clusterPoolIPv4MaskSize=27"
+	@${CILIUM_COMMAND} cilium status
 
 .PHONY: azuredisk-csi
 azuredisk-csi:

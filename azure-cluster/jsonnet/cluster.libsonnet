@@ -103,7 +103,7 @@ config {
                      } +
                      (
                        if $._config.cluster.externalCloudProvider then
-                         kubeadm_control_plane.mixins.patchExternalCloudProvider
+                         kubeadm_config_template_nodes.mixins.patchExternalCloudProvider
                        else {}
                      ),
 
